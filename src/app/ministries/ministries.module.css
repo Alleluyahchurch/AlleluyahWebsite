@@ -1,0 +1,27 @@
+.main{
+    background-color: white;
+    height: 1100px
+}
+
+.head{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.carousel{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    
+}
+
+.imgalign{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+   
+
+}
