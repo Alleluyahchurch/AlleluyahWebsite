@@ -14,6 +14,9 @@ let window:any;
 if (typeof window !== 'undefined') {
   window.$ = window.jQuery = require('jquery');
 }
+import Menu from '@mui/material/Menu';
+import YouTube from 'react-youtube';
+import MenuItem from '@mui/material/MenuItem';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import dynamic from 'next/dynamic';
@@ -24,7 +27,8 @@ import yarumillai from "../assets/yarumillai1.jpeg";
 import towshaggi from "../assets/towshagi.jpeg";
 import thedu from "../assets/thedu.jpeg";
 import location from "../assets/location.png";
-import { Rotate90DegreesCcw, RotateRight } from "@mui/icons-material";
+import React from "react";
+
 
 
 const OwlCarousel = dynamic(() => import('react-owl-carousel'), {
@@ -35,9 +39,8 @@ const options = {
   loop: true,
   margin: 10,
   items: 1,
-  autoplay: true,
-  center: true,
-  autoplayTimeout: 2000,
+  autoplay: false,
+  autoplayTimeout: 10000,
   smartSpeed: 350,
   nav: true,
   
@@ -46,31 +49,163 @@ const options = {
 export default function Home() {
   
   const router = useRouter();
-  
-  const handleRoutes = ()=>{
-    console.log("ABOUT");
-    alert('ABOUT')
-  }
+         const [events, setEvents] = React.useState<null | HTMLElement>(null);
+         const [ministries, setMinistries] = React.useState<null | HTMLElement>(null);
+         const handleEventsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+           setEvents(event.currentTarget);
+         };
+         const handleMinsitriesClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+           setMinistries(event.currentTarget);
+         };
+         const handleEventsClose = () => {
+           setEvents(null);
+         };
+         const handleMinistriesClose = ()=>{
+           setMinistries(null);
+         }
+         const handleRoutes = ()=>{
+           console.log("ABOUT");
+           alert('ABOUT')
+         }
+
+         const youtubeopts = { 
+          height: "700", 
+          width: "100%", 
+          playerVars: { 
+            autoplay: 0, 
+          }, 
+        }; 
+
   return (
     <>
     <main className={styles.main}>
       
       <div className={styles.description}>
     
-        <div className={styles.nav}>
-          {/* <div style={{position:'absolute',right:0,top:0}}>
-        <Image src={logo} width={150} height={100} alt='logo'/>
-        </div> */}
-          
-        <div style={{display:'flex'}}>
-       <p  onClick={()=>{router.push('/')}}>Home</p>
-       <p onClick={()=>{router.push('/ministries')}}>Ministries</p>
-       <p onClick={()=>{router.push('/events')}}>Events</p>
-       <p onClick={()=>{router.push('/contacts')}}>Contacts</p>
-       <p onClick={()=>{router.push('/founder')}}>Founder</p>
-       <p onClick={()=>{router.push('/about')}}>About</p>  
-       </div>
+         <div className={styles.nav}>
+
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center',width:'100%'}}>
+      <div style={{padding:"10px"}}>
+        {/* onClick={()=>{router.push('/')}} */}
+        <Button
+        id="basic-button"
+        // aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        // aria-expanded={open ? 'true' : undefined}
+        // onClick={handleClick}
+        style={{color:'black'}}
+      >
+        Home
+      </Button>
         </div>
+       
+        <div style={{padding:"10px"}}>
+      <Button
+        id="basic-button"
+        aria-controls={events ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={events ? 'true' : undefined}
+        onClick={handleEventsClick}
+        style={{color:'black'}}
+      >
+        Ministries
+      </Button>
+        </div>
+        <Menu
+        id="basic-menu"
+        anchorEl={events}
+        open={Boolean(events)}
+        onClose={handleEventsClose}
+       
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={()=>{
+          router.push('/ministries')
+          handleMinistriesClose()}}>Prayer Cell</MenuItem>
+        <MenuItem onClick={()=>{
+          router.push('/ministries')
+          handleMinistriesClose()}}>Sunday School</MenuItem>
+        <MenuItem onClick={()=>{
+          router.push('/ministries')
+          handleMinistriesClose()}}>Youth Camp</MenuItem>
+        <MenuItem onClick={()=>{
+          router.push('/ministries')
+          handleMinistriesClose()}}>Open Air Meeting</MenuItem>
+      </Menu>
+      <div style={{padding:"10px"}}>
+      <Button
+        id="basic-button"
+        aria-controls={ministries ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={ministries ? 'true' : undefined}
+        onClick={handleMinsitriesClick}
+        style={{color:'black'}}
+      >
+        Events
+      </Button>
+        </div>
+        <Menu
+        id="basic-menu"
+        anchorEl={ministries}
+        open={Boolean(ministries)}
+        onClose={handleMinistriesClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={()=>{
+          router.push('/events')
+          handleEventsClose()}}>New Year Service</MenuItem>
+        <MenuItem onClick={()=>{
+          router.push('/events')
+          handleEventsClose()}}>Youth Meeting</MenuItem>
+        <MenuItem onClick={()=>{
+          router.push('/events')
+          handleEventsClose()}}>Prayer Cell</MenuItem>
+      </Menu>
+
+      <div style={{padding:"10px"}}>
+      <Button
+        id="basic-button"
+        aria-controls={ministries ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={ministries ? 'true' : undefined}
+        onClick={()=>{router.push("/contacts")}}    
+          style={{color:'black'}}
+      >
+       Contacts
+      </Button>
+      </div>
+      <div style={{padding:"10px"}}>
+       <Button
+        id="basic-button"
+        aria-controls={ministries ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={ministries ? 'true' : undefined}
+        onClick={()=>{router.push("/founder")}}
+        style={{color:'black'}}
+      >
+       Founder
+      </Button>
+       </div>
+       <div style={{padding:"10px"}}>
+      <Button
+        id="basic-button"
+        aria-controls={ministries ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={ministries ? 'true' : undefined}
+        onClick={()=>{router.push("/about")}}
+        style={{color:'black'}}
+      >
+      About
+      </Button>
+      </div>
+       
+       </div>
+       
+      </div>
       </div>
       <div className={styles.mainbg}>
         <div  style={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:40}}>       
@@ -80,16 +215,14 @@ export default function Home() {
         <div className={styles.carousel}>
         <OwlCarousel className="owl-theme" {...options}>
         <div className="item">
-        <Image src={Kuradu}    alt="kuradu song"/>
-        <div style={{display:'flex',justifyContent:'center'}}>
-        <Button variant="contained" endIcon={<YoutubeSearchedForIcon/>}>Watch Now</Button>
-        </div>
+        <YouTube videoId="YIXGxb7e14A" opts={youtubeopts} />
+        
         </div>
         <div className="item">
-        <Image src={yarumillai}  alt="yarumillai song"/>
-       <div style={{display:'flex',justifyContent:'center'}}>
-        <Button variant="contained" endIcon={<YoutubeSearchedForIcon/>}>Watch Now</Button>
+        <YouTube videoId="Q1dFjL6Segk" opts={youtubeopts} />
         </div>
+        <div className="item">
+        <YouTube videoId=" H6Q9AylcqgQ" opts={youtubeopts} />
         </div>
         {/* <div className="item">
         <Image src={thedu} height={400}  alt="thedu thedu song"/>

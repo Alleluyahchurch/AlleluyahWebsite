@@ -30,10 +30,10 @@ export default function  Ministries(){
         <>
             <div className={styles.main}>
                 <div className={styles.head}>
-                <Image src={logo} width={200} height={300} alt="logo"/>
+                <Image src={logo} width={200} height={200} alt="logo"/>
             <p >MINISTRIES</p>
                 </div>
-                <OwlCarousel className='owl-theme' loop  nav>
+                {/* <OwlCarousel className='owl-theme' loop  nav>
                 <div>
                 <Image src={logo} width={300} height={300} alt="logo"/>
                 </div>
@@ -66,7 +66,7 @@ export default function  Ministries(){
               <Image src={apc9} width={300} height={300} alt="logo"/>
               </div>
 
-                    </OwlCarousel>
+                    </OwlCarousel> */}
           
             </div>
         </>
